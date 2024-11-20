@@ -147,6 +147,10 @@ def browser():
     driver.quit()
     print("test end!")
 
+@pytest.fixture(scope='function', autouse=True)
+def print_elegant():
+    """将pytest输出的用例信息进行一次换行操作，使输出的日志显示优雅一点（python need elegant）"""
+    print("")
 
 if __name__ == "__main__":
     capture_screenshots("test_dir/test_baidu_search.test_search_python.png")
