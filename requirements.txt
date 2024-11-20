@@ -3,5 +3,5 @@ pytest-html==3.1.1
 pytest-rerunfailures==9.1.1
 pytest-base-url==1.4.2
 click==7.1.2
+appium-python-client==2.6.0     # 较新的版本下会导致poium不兼容
 poium==1.1.5
-webdriver-manager==3.8.2

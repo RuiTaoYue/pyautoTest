@@ -7,7 +7,6 @@ from selenium.webdriver.chrome.options import Options as CH_Options
 from selenium.webdriver.firefox.options import Options as FF_Options
 from selenium.webdriver.chrome.service import Service as ChromeService
 from selenium.webdriver.firefox.service import Service as FirefoxService
-from webdriver_manager.chrome import ChromeDriverManager
 from webdriver_manager.firefox import GeckoDriverManager
 from config import RunConfig
 
@@ -88,7 +87,6 @@ def capture_screenshots(case_name):
     :param case_name: 用例名
     :return:
     """
-    global driver
     file_name = case_name.split("/")[-1]
     if RunConfig.NEW_REPORT is None:
         raise NameError('没有初始化测试报告目录')
@@ -104,11 +102,10 @@ def browser():
     全局定义浏览器驱动
     :return:
     """
-    global driver
 
     if RunConfig.driver_type == "chrome":
         # 本地chrome浏览器
-        driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
+        driver = webdriver.Chrome()
         driver.maximize_window()
 
     elif RunConfig.driver_type == "firefox":
@@ -122,9 +119,7 @@ def browser():
         chrome_options.add_argument("--headless")
         chrome_options.add_argument('--disable-gpu')
         # chrome_options.add_argument("--window-size=1920x1080")
-        driver = webdriver.Chrome(
-            options=chrome_options,
-            service=ChromeService(ChromeDriverManager().install()))
+        driver = webdriver.Chrome(options=chrome_options)
 
     elif RunConfig.driver_type == "firefox-headless":
         # firefox headless模式
@@ -147,13 +142,8 @@ def browser():
 
     RunConfig.driver = driver
 
-    return driver
-
-
-# 关闭浏览器
-@pytest.fixture(scope="session", autouse=True)
-def browser_close():
     yield driver
+
     driver.quit()
     print("test end!")
 

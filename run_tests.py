@@ -51,4 +51,6 @@ def run(m):
 
 
 if __name__ == '__main__':
-    run()
+    run(["-m", "debug"])        # 调试模式
+    # run()                       # 回归模式,会生成
+

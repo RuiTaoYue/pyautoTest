@@ -7,9 +7,9 @@ import sys
 from time import sleep
 import pytest
 from os.path import dirname, abspath
+from page.baidu_page import BaiduPage
 
 sys.path.insert(0, dirname(dirname(abspath(__file__))))
-from page.baidu_page import BaiduPage
 
 
 class TestSearch:
@@ -26,7 +26,7 @@ class TestSearch:
         * 检查页面标题是否包含关键字。
         """
         page = BaiduPage(browser)
-        page.get(base_url)
+        page.open(base_url)
         page.search_input = "pytest"
         page.search_button.click()
         sleep(2)
@@ -49,7 +49,7 @@ class TestSearchSettings:
         * 检查是否弹出提示框
         """
         page = BaiduPage(browser)
-        page.get(base_url)
+        page.open(base_url)
         page.settings.click()
         page.search_setting.click()
         sleep(2)
